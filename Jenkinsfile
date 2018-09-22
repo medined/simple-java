@@ -18,7 +18,7 @@ pipeline {
                 echo "Building"
                 env | sort
                 ls -l $JAVA_HOME/bin/java
-                $JAVA_HOME/bin/java -version
+                java -version
                 mvn --version
             ''' 
       }
