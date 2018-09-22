@@ -1,16 +1,11 @@
 pipeline {
-    agent any
-    stages {
-        stage('clone') {
-            steps {
-                git(url: 'https://github.com/medined/simple.git', branch: 'master')
-            }
-        }
-        stage('Build') { 
-            steps { 
-                echo 'This is a minimal pipeline.' 
-            }
-        }
+  agent { docker 'maven:3.3.3' }
+  stages {
+    stage('build') {
+      steps {
+        sh 'mvn --version'
+        sh 'mvn install'
+      }
     }
   }
 }
