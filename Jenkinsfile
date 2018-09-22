@@ -14,10 +14,9 @@ pipeline {
     stage('build') {
       steps {
             sh '''
-                echo "Building"
-                env | sort
                 java -version
-                mvn --version
+                pwd
+                mvn package
             ''' 
       }
     }
