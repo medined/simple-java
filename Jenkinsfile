@@ -8,15 +8,16 @@ pipeline {
     stage ('Initialize') {
         steps {
             sh '''
-                env | sort
+                echo "Initializing"
             ''' 
         }
     }
     stage('build') {
       steps {
             sh '''
+                echo "Building"
                 env | sort
-                ls -l "$JAVA_HOME\\bin\\java"
+                java -version
                 mvn --version
             ''' 
       }
