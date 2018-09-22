@@ -8,18 +8,18 @@ pipeline {
     stage ('Initialize') {
         steps {
             sh '''
-                echo "PATH = ${PATH}"
-                echo "M2_HOME = ${M2_HOME}"
-                echo "JAVA_HOME = ${JAVA_HOME}"
-                ls -l "$JAVA_HOME\\bin\\java"
+                env | sort
             ''' 
         }
     }
     stage('build') {
       steps {
-        sh 'mvn --version'
+            sh '''
+                env | sort
+                ls -l "$JAVA_HOME\\bin\\java"
+                mvn --version
+            ''' 
       }
     }
   }
 }
-QuickOracle123$
