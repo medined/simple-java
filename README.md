@@ -15,7 +15,7 @@ simple web application
 * Start new pipeline.
 * Get Github Access Token
 * Setup JDK and Maven in Global Tool Configuration
-
+  * provide Oracle account credentials
 
 ## Jenkins
 
