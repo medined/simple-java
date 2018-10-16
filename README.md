@@ -11,11 +11,8 @@ simple web application
 * Run Jenkins as Docker container
 * Create first admin user
 * Install standard plugins
-* Install Blue Ocean plugin.
-* Start new pipeline.
 * Get Github Access Token
-* Setup JDK and Maven in Global Tool Configuration
-  * provide Oracle account credentials
+* Setup Maven in Global Tool Configuration
 
 ## Jenkins
 
