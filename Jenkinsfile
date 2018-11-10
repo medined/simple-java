@@ -6,7 +6,7 @@ pipeline {
     stage ('Initialize') {
         steps {
             sh '''
-                echo "Initializing"
+                echo "Initializing the pipeline"
             '''
         }
     }
