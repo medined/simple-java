@@ -1,14 +1,13 @@
 pipeline {
-  agent any
-  tools { 
-    maven
+  agent {
+    label 'maven'
   }
   stages {
     stage ('Initialize') {
         steps {
             sh '''
                 echo "Initializing"
-            ''' 
+            '''
         }
     }
     stage('build') {
@@ -17,7 +16,7 @@ pipeline {
                 java -version
                 pwd
                 mvn package
-            ''' 
+            '''
       }
     }
   }
