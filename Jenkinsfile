@@ -7,7 +7,6 @@ pipeline {
   stages {
     stage('Build App') {
       steps {
-        git branch: 'eap-7', url: 'http://gogs:3000/gogs/openshift-tasks.git'
         sh "${mvnCmd} install -DskipTests=true"
       }
     }
