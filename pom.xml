@@ -103,7 +103,7 @@
                                 <element>PACKAGE</element>
                                 <limits>
                                     <limit implementation="org.jacoco.report.check.Limit">
-                                        <counter>COMPLEXITY</counter>
+                                        <counter>LINE</counter>
                                         <value>COVEREDRATIO</value>
                                         <minimum>0.10</minimum>
                                     </limit>
