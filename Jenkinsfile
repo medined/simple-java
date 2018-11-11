@@ -12,7 +12,7 @@ pipeline {
     }
     stage('Test') {
       steps {
-        sh "${mvnCmd} test"
+        sh "${mvnCmd} verify"
         step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
       }
     }
