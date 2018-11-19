@@ -33,16 +33,5 @@ pipeline {
         }
       }
     }
-    stage('Deploy DEV') {
-      steps {
-        script {
-          openshift.withCluster() {
-            openshift.withProject("zz-slp-dev-02-o1") {
-              openshift.selector("dc", "simple").rollout().latest();
-            }
-          }
-        }
-      }
-    }
   }
 }
