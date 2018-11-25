@@ -34,7 +34,7 @@ pipeline {
     }
     stage('Archive App') {
       steps {
-        sh "${mvnCmd} deploy -DskipTests=true -P nexus3"
+        sh "${mvnCmd} deploy -DskipTests=true -P nexus"
       }
     }
   }
