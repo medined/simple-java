@@ -32,9 +32,24 @@ pipeline {
         sh "${mvnCmd} verify"
       }
     }
-    stage('Archive App') {
+    stage('Create Image Builder') {
+      when {
+        expression {
+          openshift.withCluster() {
+            openshift.withProject('simple-dev') {
+              return !openshift.selector("bc", "tasks").exists();
+            }
+          }
+        }
+      }
       steps {
-        sh "${mvnCmd} deploy -DskipTests=true -P nexus"
+        script {
+          openshift.withCluster() {
+            openshift.withProject('simple-dev') {
+              openshift.newBuild("--name=simple", "--image-stream=jboss-eap70-openshift:1.5", "--binary=true")
+            }
+          }
+        }
       }
     }
   }
