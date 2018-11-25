@@ -7,6 +7,10 @@ pipeline {
   stages {
     stage('Build App') {
       steps {
+        script {
+          def pom = readMavenPom file: 'pom.xml'
+          version = pom.version
+        }
         sh "${mvnCmd} install -DskipTests=true"
       }
     }
