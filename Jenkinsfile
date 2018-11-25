@@ -46,7 +46,7 @@ pipeline {
         script {
           openshift.withCluster() {
             openshift.withProject('simple-dev') {
-              openshift.newBuild("--name=simple", "--image-stream=jboss-eap70-openshift:1.5", "--binary=true")
+              openshift.newBuild("--name=simple", "--image-stream=jboss-eap70-openshift", "--binary=true")
             }
           }
         }
