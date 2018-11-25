@@ -21,13 +21,28 @@ pipeline {
         sh "${mvnCmd} verify"
       }
     }
-    stage('Build Image') {
+    stage('Create DEV') {
+      when {
+        expression {
+          openshift.withCluster() {
+            openshift.withProject('simple-dev') {
+              return !openshift.selector('dc', 'tasks').exists()
+            }
+          }
+        }
+      }
       steps {
-        sh "cp target/simple-0.0.1-SNAPSHOT.war target/ROOT.war"
         script {
           openshift.withCluster() {
-            openshift.withProject("zz-slp-dev-02-o1") {
-              openshift.selector("bc", "simple").startBuild("--from-file=target/ROOT.war", "--wait=true")
+            openshift.withProject('simple-dev') {
+              def app = openshift.newApp("tasks:latest")
+              app.narrow("svc").expose();
+
+              def dc = openshift.selector("dc", "tasks")
+              while (dc.object().spec.replicas != dc.object().status.availableReplicas) {
+                  sleep 10
+              }
+              openshift.set("triggers", "dc/tasks", "--manual")
             }
           }
         }
