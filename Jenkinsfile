@@ -1,23 +1,24 @@
+def mvnCmd = "mvn"
+
 pipeline {
-  agent any
-  tools { 
-    maven 'Maven 3.5.4' 
+  agent {
+    label 'maven'
   }
   stages {
-    stage ('Initialize') {
-        steps {
-            sh '''
-                echo "Initializing"
-            ''' 
-        }
-    }
-    stage('build') {
+    stage('Build App') {
       steps {
-            sh '''
-                java -version
-                pwd
-                mvn package
-            ''' 
+        sh "${mvnCmd} install -DskipTests=true"
+      }
+    }
+    stage('Test') {
+      steps {
+        sh "${mvnCmd} test"
+        step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
+      }
+    }
+    stage('Coverage') {
+      steps {
+        sh "${mvnCmd} verify"
       }
     }
   }
