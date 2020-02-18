@@ -1,25 +1,9 @@
-def mvnCmd = "mvn"
-
 pipeline {
-  agent {
-    label 'maven'
-  }
+  agent any
   stages {
-    stage('Build App') {
+    stage('Build') {
       steps {
-        sh "${mvnCmd} install -DskipTests=true"
+        echo 'This is a small pipeline'
       }
-    }
-    stage('Test') {
-      steps {
-        sh "${mvnCmd} test"
-        step([$class: 'JUnitResultArchiver', testResults: '**/target/surefire-reports/TEST-*.xml'])
-      }
-    }
-    stage('Coverage') {
-      steps {
-        sh "${mvnCmd} verify"
-      }
-    }
   }
 }
