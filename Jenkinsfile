@@ -8,7 +8,7 @@ pipeline {
           uname -a
           apt-get update -y
           apt-cache poilicy
-          ls -l /etc/apt/sources.list
+          sudo ls -l /etc/apt/sources.list
           echo $PATH
           env | sort
         '''
