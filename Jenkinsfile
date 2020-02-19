@@ -5,5 +5,6 @@ pipeline {
       steps {
         echo 'This is a small pipeline'
       }
+    }
   }
 }
