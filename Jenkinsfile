@@ -3,7 +3,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        echo 'This is a small pipeline'
+        whoami
+        echo $PATH
+        env | sort
       }
     }
   }
