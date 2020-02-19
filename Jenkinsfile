@@ -6,10 +6,7 @@ pipeline {
         sh '''
           whoami
           uname -a
-          lsb_release -a
-          cat /etc/*release
-          cat /etc/issue*
-          cat /proc/vesion
+          yum list | grep jdk
           echo $PATH
           env | sort
         '''
