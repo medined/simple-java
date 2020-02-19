@@ -1,3 +1,12 @@
-docker.image('maven:3.3.3-jdk-8').inside {
-  sh 'mvn --version'
+pipeline {
+    agent {
+        docker { image 'node:7-alpine' }
+    }
+    stages {
+        stage('Test') {
+            steps {
+                sh 'node --version'
+            }
+        }
+    }
 }
