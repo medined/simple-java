@@ -3,9 +3,11 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        whoami
-        echo $PATH
-        env | sort
+        sh '''
+          whoami
+          echo $PATH
+          env | sort
+        '''
       }
     }
   }
