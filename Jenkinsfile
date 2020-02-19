@@ -6,7 +6,7 @@ pipeline {
         sh '''
           whoami
           uname -a
-          yum list | grep jdk
+          apt update -y
           echo $PATH
           env | sort
         '''
