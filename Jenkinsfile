@@ -6,7 +6,9 @@ pipeline {
         sh '''
           whoami
           uname -a
-          apt update -y
+          apt-get update -y
+          apt-cache poilicy
+          ls -l /etc/apt/sources.list
           echo $PATH
           env | sort
         '''
