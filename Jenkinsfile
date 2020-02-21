@@ -1,12 +1,10 @@
 pipeline {
-agent {
-    label 'cloudbees'
-}
-stages {
-        stage('Test') {
-            steps {
-                sh 'whoami'
-            }
-        }
+  agent any
+  stages {
+    stage('Configuration') {
+      steps {
+        sh 'whoami'
+      }
     }
+  }
 }
