@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Configuration') {
+    stage('Example') {
       steps {
-        sh 'whoami'
+        sh 'node --version'
       }
     }
   }
