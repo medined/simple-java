@@ -8,42 +8,21 @@ pipeline {
     }
     stage('Project Directory') {
       steps {
-        sh 'find /home/jenkins'
+        sh 'find $WORKSPACE'
       }
     }
-    stage('Introspection') {
+    stage('Deploy to ephemeral namespace.') {
       steps {
         withKubeConfig(clusterName: 'ic1', credentialsId: 'jenkins-deployer-credentials', contextName: 'va-oit.cloud', namespace: 'sandbox', serverUrl: 'https://api.va-oit.cloud') {
-            sh '''
-            CURRENT_CTX=$(kubectl config view --minify --output jsonpath="{.current-context}");
-            NAMESPACE=$(kubectl config view --minify --output jsonpath="{.contexts[0].context.namespace}");
-            echo "CURRENT_CTX: $CURRENT_CTX";
-            echo "NAMESPACE: $NAMESPACE";
-            '''
-        }
-      }
-    }
-    stage('Create ephemeral namespace if needed') {
-      steps {
-        withKubeConfig(clusterName: 'ic1', credentialsId: 'jenkins-deployer-credentials', contextName: 'va-oit.cloud', namespace: 'sandbox', serverUrl: 'https://api.va-oit.cloud') {
-          sh "kubectl get namespace ephemeral || kubectl create namespace ephemeral;"
-        }
-      }
-    }
-    stage('List Pods') {
-      steps {
-        withKubeConfig(clusterName: 'ic1', credentialsId: 'jenkins-deployer-credentials', contextName: 'va-oit.cloud', namespace: 'sandbox', serverUrl: 'https://api.va-oit.cloud') {
-            sh '''
-            kubectl get namespaces;
-            kubectl get pods;
-            '''
-        }
-      }
-    }
-    stage('Delete ephemeral namespace') {
-      steps {
-        withKubeConfig(clusterName: 'ic1', credentialsId: 'jenkins-deployer-credentials', contextName: 'va-oit.cloud', namespace: 'sandbox', serverUrl: 'https://api.va-oit.cloud') {
-          sh "kubectl delete namespace ephemeral"
+          sh '''
+          NAMESPACE="ephermeral-$JOB_NAME"
+          # create namespace if needed.
+          kubectl get namespace $NAMESPACE || kubectl create namespace $NAMESPACE;
+          # change current namespace.
+          kubectl config set-context --current --namespace=$NAMESPACE
+          kubectl get pods;
+          kubectl delete namespace $NAMESPACE
+          '''
         }
       }
     }
