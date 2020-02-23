@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Project Directory') {
       steps {
-        sh 'find $HUDSON_HOME/workspace'
+        sh 'find /home/jenkins'
       }
     }
     stage('Introspection') {
