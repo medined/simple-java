@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Project Directory') {
       steps {
-        sh 'ls -la $HUDSON_HOME/workspace/$JOB_BASE_NAME@script'
+        sh 'find $HUDSON_HOME/workspace'
       }
     }
     stage('Introspection') {
