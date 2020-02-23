@@ -6,9 +6,9 @@ pipeline {
         sh 'env | sort'
       }
     }
-    stage('Projet Directory') {
+    stage('Project Directory') {
       steps {
-        sh 'ls -la $HUDSON_HOME/workspace/$$JOB_BASE_NAME@script'
+        sh 'ls -la $HUDSON_HOME/workspace/$JOB_BASE_NAME@script'
       }
     }
     stage('Introspection') {
@@ -23,12 +23,27 @@ pipeline {
         }
       }
     }
+    stage('Create ephemeral namespace if needed') {
+      steps {
+        withKubeConfig(clusterName: 'ic1', credentialsId: 'jenkins-deployer-credentials', contextName: 'va-oit.cloud', namespace: 'sandbox', serverUrl: 'https://api.va-oit.cloud') {
+          sh "kubectl get namespace ephemeral || kubectl create ns ephemeral")
+        }
+      }
+    }
     stage('List Pods') {
       steps {
         withKubeConfig(clusterName: 'ic1', credentialsId: 'jenkins-deployer-credentials', contextName: 'va-oit.cloud', namespace: 'sandbox', serverUrl: 'https://api.va-oit.cloud') {
             sh '''
+            kubectl get namespaces;
             kubectl get pods;
             '''
+        }
+      }
+    }
+    stage('Delete ephemeral namespace') {
+      steps {
+        withKubeConfig(clusterName: 'ic1', credentialsId: 'jenkins-deployer-credentials', contextName: 'va-oit.cloud', namespace: 'sandbox', serverUrl: 'https://api.va-oit.cloud') {
+          sh "kubectl delete namespace ephemeral")
         }
       }
     }
