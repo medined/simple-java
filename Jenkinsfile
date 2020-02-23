@@ -26,7 +26,7 @@ pipeline {
     stage('Create ephemeral namespace if needed') {
       steps {
         withKubeConfig(clusterName: 'ic1', credentialsId: 'jenkins-deployer-credentials', contextName: 'va-oit.cloud', namespace: 'sandbox', serverUrl: 'https://api.va-oit.cloud') {
-          sh "kubectl get namespace ephemeral || kubectl create namespace ephemeral;")
+          sh "kubectl get namespace ephemeral || kubectl create namespace ephemeral;"
         }
       }
     }
